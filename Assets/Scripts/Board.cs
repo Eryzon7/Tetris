@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -31,6 +32,9 @@ public class Board : MonoBehaviour
 
     private float moveTimer;
     private int moveDir; // -1, 0, 1
+
+    // Define the event
+    public event Action<int> OnLineBreak;
 
     void Awake()
     {
@@ -265,7 +269,7 @@ public class Board : MonoBehaviour
 
         if (clearedCount > 0)
         {
-            // Hook your scoring system here, e.g. AddScore(clearedCount).
+            OnLineBreak?.Invoke(clearedCount);
             Debug.Log($"Cleared {clearedCount} line(s)");
         }
     }
