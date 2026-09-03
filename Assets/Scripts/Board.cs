@@ -35,6 +35,8 @@ public class Board : MonoBehaviour
 
     // Define the event
     public event Action<int> OnLineBreak;
+    public event Action OnGameOver;
+    public event Action OnBlockLocked;
 
     void Awake()
     {
@@ -244,6 +246,8 @@ public class Board : MonoBehaviour
             }
         }
 
+        OnBlockLocked?.Invoke();
+
         Clear(activePiece);
         activePiece = null;
 
@@ -340,7 +344,7 @@ public class Board : MonoBehaviour
 
     void GameOver()
     {
-        Debug.Log("Game Over");
-        enabled = false; // stops Update from running; hook up a restart flow as needed
+        enabled = false;
+        OnGameOver?.Invoke();
     }
 }
